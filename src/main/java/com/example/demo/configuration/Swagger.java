@@ -1,4 +1,3 @@
 package com.example.demo.configuration;
 
-public class Swagger {
-}
+public class Swagger {}

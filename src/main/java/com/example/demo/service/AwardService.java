@@ -1,4 +1,3 @@
 package com.example.demo.service;
 
-public class AwardService {
-}
+public class AwardService {}
