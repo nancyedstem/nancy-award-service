@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.app}}
+  namespace: {{.Values.namespace}}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{.Values.app}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.app}}
+        repository: {{.Values.image.repository}}
+    spec:
+      containers:
+        - name: {{.Values.app}}
+          image: {{.Values.image.name}}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /mnt/{{.Values.secretMap.name}}
+              name: {{.Chart.Name}}
+              readOnly: true
+          env:
+            - name: DB_ENDPOINT
+              value: localhost:5432
+            - name: DB_USERNAME
+              value: postgres
+            - name: DB_PASSWORD
+              value: postgres
